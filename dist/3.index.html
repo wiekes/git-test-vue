@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- 我们可以给数据模板中的属性 增加一个收集器 dep -->
+    <!-- 页面渲染的时候 我们将渲染逻辑封装到watcher中 vm._update(vm.render()); -->
+    <!-- 让dep记住者个watcher即可,  稍后属性变化了可以找到对应的dep中存放的watcher进行重新渲染 -->
+    <!-- 观察者模式 -->
+    <div id="app" style="color:red;background:yellow">
+        <div style="color:red;background:yellow;">{{name}}hello{{name}}hello</div>
+        <span>{{age}}</span>
+        <span>hello world</span>
+    </div>
+    <script src="vue.js"></script>
+    <script>
+        
+
+        const vm = new Vue({
+            data() {  // 代理数据
+                return {
+                    name: 'zf',
+                    age: 21,
+                    address: {
+                        content: '佛科院',
+                        num: 19
+                    },
+                    hobby: ['eat', 'drink', { a: 1 }]
+                }
+            },
+            // template: '<div>hello</div>'
+            // el:'#app', // 我需要将数据 解析到el元素上
+            // render(){
+
+            // }
+        })
+        vm.$mount('#app');
+
+        // 属性和试图广联起来 做到数据吧，化可以自动更新新试图 （观察者模式）
+        // setTimeout(() => {
+        //     vm.name = 'wiekse';
+        //     vm.age = 30;   
+        //     vm.address =0   // 之所以address修改没更新没触发 因为 没使用（组件或者视图没使用 ，没出现）->没渲染->dep.subs=[]->没记录到wathcer->也没有wathcer记录该dep->dep.notify()执行时没有触发watcherupdate()
+
+        //     // vm._render()
+        //     // debugger
+        //     // vm._update(vm._render())
+        // }, 1000)
+
+        vm.name = 'jw'; // 不会立即重新渲染到页面
+        // debugger
+        // nextTick不是创建了一个异步任务,而是将这个任务维护到了队列中而已
+        vm.$nextTick(() => {
+            console.log(app.innerHTML);  // 获取同步 这里实际拿到的是 setTimeout 执行之后的异步值或者其他
+            console.log(app);
+        })
+
+
+
+
+
+        // 1.模板引擎 性能差 需要正则匹配替换 1.0的时候 没有引入虚拟DOM的变化
+        // 2.采用虚拟DOM，数据变化后比较虚拟DOM的差异 最后更新需要更新的地方
+        // 3.核心局势我们需要将 模板变成我们的 js语法， 通过语法生成虚拟DOM
+
+        // 从一个东西 变成 另一个东西 语法之间的转化 如 es6 -> es5
+        // css压缩  我们需要先变成语法树在重新组装代码成新的语法  将template语法转换成render函数
+
+
+        // 1) 将数据先处理成响应式 initState （针对对象来说主要是增加definProperty 针对数组就是重新方法）
+        // 2）模板编译：将模板先转化成ast语法树，将ast语法树生成**render**方法
+        // 3）调用render函数 会进行取值操作 产生对应的虚拟DOM render(){ _c('div',null, _v(name))} 触发get方法
+        // 4）将虚拟dom渲染成真实dom
+
+        // 1.观察者模式实现依赖收集
+        // 2.异步更新策略
+        // 3.mixin的实现原理
+
+    </script>
+</body>
+
+</html>

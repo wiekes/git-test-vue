@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app" style="color:red;background:yellow">
+       
+    </div>
+    <script src="vue.js"></script>
+    <script>
+        // Vue.mixin 要在初始化前
+        Vue.mixin({
+            created(){
+                console.log('mixin-creeated');
+            }
+        }); // 发布订阅 -> 订阅
+        Vue.mixin({
+            created(){
+                console.log('111');
+            },
+            a:1,
+            b:2
+        })
+        console.log(Vue.options);
+        const vm = new Vue({
+            data() {  // 代理数据
+                return {
+                    name: 'zf',
+                    age: 21,
+                    address: {
+                        content: '佛科院',
+                        num: 19
+                    },
+                    hobby: ['eat', 'drink', { a: 1 }]
+                }
+            },
+            created(){
+
+            }
+        });
+        vm.$mount('#app');
+
+
+    </script>
+</body>
+
+</html>

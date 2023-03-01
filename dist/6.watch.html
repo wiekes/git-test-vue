@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        {{firstname}}
+    </div>
+    <script src="./vue.js"></script>
+    <!-- <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.13/vue.js"></script>        -->
+    <script>
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                firstname: 'wiekes',
+                lastname: 'xu'
+            },
+            // 写法 直接写成函数
+            // 数组写法
+
+            watch: {
+                firstname(newValue, oldValue) {
+                    console.log(newValue, oldValue);
+                }
+            }
+
+        })
+        // 底层 最终执行的都是$watch 即使你写的是options里面的写法也会转化成$watch 的写法
+        // 传入两个函数 匿名函数和回调函数 cb callback
+        vm.$watch(
+            function exprORFn() { return vm.firstname },
+            function (newValue, oldValue) {
+                console.log(newValue, oldValue, '11');
+            });
+        setTimeout(() => {
+            vm.firstname = 123
+        }, 1000)
+    </script>
+</body>
+
+</html>
