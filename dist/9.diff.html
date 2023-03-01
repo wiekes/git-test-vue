@@ -25,12 +25,6 @@
 
         })
         // vm.arr[0]=100; // 这种方式没监控到
-        // vm.arr.length = 100; // 没监控长度变化
-
-        // 你改变的不是arr属性 而是arr对象的数组对象
-        vm.arr.push(100); // 能监控到 改的是数组本身
-        // vm.arr[3].a=1
-        vm.a.__ob__.dep.notify()
         vm.arr[4].push(111)
     </script>
 </body>
